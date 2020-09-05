@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" charset="utf-8"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" charset="utf-8"></script>
+
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Hi <%= name %></h1>
+      <p>You have successfully logged in to the internship demo for Sarada Technologies</p>
+      <p>You will be logged out after 10 seconds of inactivity. Keep moving your mouse or refreshing to reset the timer</p>
+      <br>
+      <br>
+      <br>
+      <br>
+      <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-primary btn-block">Log Out</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+  var idleTime = 0;
+  $(document).ready(function() {
+    //Increment the idle time counter every minute.
+    var idleInterval = setInterval(timerIncrement, 1000); // 1 second
+    //Zero the idle timer on mouse movement.
+    $(this).mousemove(function(e) {
+      idleTime = 0;
+    });
+    $(this).keypress(function(e) {
+      idleTime = 0;
+    });
+  });
+
+  function timerIncrement() {
+    idleTime = idleTime + 1;
+    console.log(idleTime);
+    if (idleTime > 10) { //10 seconds
+      $.post('/logout?_method=DELETE');
+      window.location.reload();
+    }
+  }
+</script>
